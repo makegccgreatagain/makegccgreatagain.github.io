@@ -1,0 +1,60 @@
+<html>
+<head>
+<script type="text/javascript" src="js/hashes.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<style>
+	body {
+		text-align: center;
+		margin-top: 20%;
+		background: #0d0d0d;
+		font-family: Sans;
+		font-size: 24px;
+	}
+	#a {
+		font-weight: bold;
+	}
+	.aa {
+		color: green;
+	}
+	.dd {
+		color: red;
+	}
+</style>
+</head>
+<body>
+	<form id="main">
+		<input name="i">
+		<input name="f">
+		<input name="m">
+	</form>
+	<div>
+		<span id="a">xxxxxx (f) (m)</span>
+	</div>
+	<script>
+		$(document).ready(function() {
+			console.log("hello");
+			$('#main').change(function() {
+				console.log(".");
+				var i = $('input[name="i"]').val();
+				var f = $('input[name="f"]').val();
+				var m = $('input[name="m"]').val();
+				var c = i+f+m+'\n';
+				var n = new Hashes.SHA512().hex(c);
+				console.log(n);
+
+				$.get('hs/hs', function(d){
+					if (d.indexOf(n) !== -1) {
+						console.log("Y");
+						$("#a").removeClass("dd");
+						$("#a").addClass("aa");
+					} else {
+						console.log("N");
+						$("#a").removeClass("aa");
+						$("#a").addClass("dd");
+					}
+				}, 'text');
+			});
+		});
+	</script>
+</body>
+</html>
